@@ -1,0 +1,7 @@
+#coordinate-system {
+  position: absolute;
+  left: 20px;
+  top: 20px;
+  background: #f8f8f8;
+  border: 1px black solid;
+}
