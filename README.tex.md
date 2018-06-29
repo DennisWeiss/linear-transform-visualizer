@@ -4,7 +4,7 @@ This tool is supposed visualize linear transformation of type $\mathbb{R}^2 \rig
 
 ## Features
 
-The base vectors $\hat{i}$ and $\hat{j}$ can be moved and produce a $/mathbb{R}^{2 \times 2}$ matrix accordingly. Determinant, inverse matrix and null space is also supposed to be computed.
+The base vectors $\hat{i}$ and $\hat{j}$ can be moved and produce a $\mathbb{R}^{2 \times 2}$ matrix accordingly. Determinant, inverse matrix and null space is also supposed to be computed.
 
 ## Installation
 
