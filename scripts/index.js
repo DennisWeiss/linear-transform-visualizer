@@ -25,6 +25,7 @@ const updateDimensions = () => {
     coordinateSystem.width = parentDivWidth - 2 * marginHorizontal
     coordinateSystem.height = parentDivHeight - 2 * marginVertical
 
+    resetCanvas()
     drawCoordinates()
     drawBaseVectors()
     setInfo()
