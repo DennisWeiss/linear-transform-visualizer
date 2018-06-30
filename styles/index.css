@@ -1,7 +1,28 @@
+#coordinate-system-div {
+    flex-grow: 1;
+    height: 100%;
+}
+
+.main {
+    display: flex;
+}
+
+#info {
+    width: 300px;
+    height: 100%;
+    float: right;
+}
+
+#matrix-div {
+    margin-top: 30px;
+    margin-left: 20px;
+}
+
+
 #coordinate-system {
-  position: absolute;
-  left: 20px;
-  top: 20px;
-  background: #f8f8f8;
-  border: 1px black solid;
+    position: absolute;
+    left: 20px;
+    top: 20px;
+    background: #f8f8f8;
+    border: 1px black solid;
 }
