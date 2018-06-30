@@ -74,9 +74,9 @@ const drawTransformedCoordinates = () => {
         const transformedPosVector = vectorTransform(matrix, posVector)
         const transformedNegVector = vectorTransform(matrix, negVector)
         context.strokeStyle = '#589EA5'
-        context.lineWidth = i === 0 ? 3 : 1
-        context.moveTo(origin[0] + scale * transformedPosVector[0], origin[1] + scale * transformedPosVector[1])
-        context.lineTo(origin[0] + scale * transformedNegVector[0], origin[1] + scale * transformedNegVector[1])
+        context.lineWidth = 1
+        context.moveTo(origin[0] + scale * transformedPosVector[0], origin[1] - scale * transformedPosVector[1])
+        context.lineTo(origin[0] + scale * transformedNegVector[0], origin[1] - scale * transformedNegVector[1])
         context.stroke()
     }
 
@@ -87,9 +87,9 @@ const drawTransformedCoordinates = () => {
         const transformedPosVector = vectorTransform(matrix, posVector)
         const transformedNegVector = vectorTransform(matrix, negVector)
         context.strokeStyle = '#589EA5'
-        context.lineWidth = i === 0 ? 3 : 1
-        context.moveTo(origin[0] + scale * transformedPosVector[0], origin[1] + scale * transformedPosVector[1])
-        context.lineTo(origin[0] + scale * transformedNegVector[0], origin[1] + scale * transformedNegVector[1])
+        context.lineWidth = 1
+        context.moveTo(origin[0] + scale * transformedPosVector[0], origin[1] - scale * transformedPosVector[1])
+        context.lineTo(origin[0] + scale * transformedNegVector[0], origin[1] - scale * transformedNegVector[1])
         context.stroke()
     }
 }
@@ -210,8 +210,8 @@ const handleZoom = event => {
     scale = Math.max(4, scale)
     context.clearRect(0, 0, coordinateSystem.width, coordinateSystem.height)
     drawCoordinates()
-    drawBaseVectors()
     drawTransformedCoordinates()
+    drawBaseVectors()
 }
 
 const round = (number, digits) => Math.round(Math.pow(10, digits) * number) / Math.pow(10, digits)
