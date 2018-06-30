@@ -18,6 +18,15 @@
     margin-left: 20px;
 }
 
+#matrix-inverse-div {
+    margin-top: 30px;
+    margin-left: 20px;
+}
+
+#det-div {
+    font: 26px "Times New Roman";
+    margin: 40px 25px;
+}
 
 #coordinate-system {
     position: absolute;

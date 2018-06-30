@@ -1,6 +1,7 @@
+
 const marginVertical = 20
 const marginHorizontal = 20
-const scale = 50
+let scale = 50
 // const arrowHeadLength = 10
 const coordinateColor = '#aaaaaa'
 const axisColor = '#000000'
@@ -16,7 +17,11 @@ const context = coordinateSystem.getContext('2d')
 const matrixCanvas = document.getElementById('matrix')
 const matrixContext = matrixCanvas.getContext('2d')
 
-let matrix = [[-3.56, 4.1], [3.78, -1]]
+const inverseMatrixCanvas = document.getElementById('inverse-matrix')
+const inverseMatrixContext = inverseMatrixCanvas.getContext('2d')
+
+let matrix = [[5, 2], [3, 4]]
+
 
 const updateDimensions = () => {
     parentDivWidth = document.getElementById('coordinate-system-div').offsetWidth
@@ -53,6 +58,40 @@ const drawCoordinates = () => {
         context.lineTo(coordinateSystem.width, yPosition)
         context.stroke()
     }
+
+    drawTransformedCoordinates()
+}
+
+const drawTransformedCoordinates = () => {
+    const xScale = Math.floor(coordinateSystem.width / (2 * scale))
+    const yScale = Math.floor(coordinateSystem.height / (2 * scale))
+    const origin = [Math.floor(coordinateSystem.width / 2), Math.floor(coordinateSystem.height / 2)]
+
+    for (let i = -3 * xScale; i <= 3 * xScale; i++) {
+        context.beginPath()
+        const posVector = [i, 3 * yScale]
+        const negVector = [i, -3 * yScale]
+        const transformedPosVector = vectorTransform(matrix, posVector)
+        const transformedNegVector = vectorTransform(matrix, negVector)
+        context.strokeStyle = '#589EA5'
+        context.lineWidth = i === 0 ? 3 : 1
+        context.moveTo(origin[0] + scale * transformedPosVector[0], origin[1] + scale * transformedPosVector[1])
+        context.lineTo(origin[0] + scale * transformedNegVector[0], origin[1] + scale * transformedNegVector[1])
+        context.stroke()
+    }
+
+    for (let i = -3 * yScale; i <= 3 * yScale; i++) {
+        context.beginPath()
+        const posVector = [3 * xScale, i]
+        const negVector = [-3 * xScale, i]
+        const transformedPosVector = vectorTransform(matrix, posVector)
+        const transformedNegVector = vectorTransform(matrix, negVector)
+        context.strokeStyle = '#589EA5'
+        context.lineWidth = i === 0 ? 3 : 1
+        context.moveTo(origin[0] + scale * transformedPosVector[0], origin[1] + scale * transformedPosVector[1])
+        context.lineTo(origin[0] + scale * transformedNegVector[0], origin[1] + scale * transformedNegVector[1])
+        context.stroke()
+    }
 }
 
 const drawBaseVectors = () => {
@@ -78,6 +117,7 @@ const drawBaseVectors = () => {
 const resetCanvas = () => {
     context.clearRect(0, 0, coordinateSystem.width, coordinateSystem.height)
     matrixContext.clearRect(0, 0, matrixCanvas.width, matrixCanvas.height)
+    inverseMatrixContext.clearRect(0, 0, inverseMatrixCanvas.width, inverseMatrixCanvas.height)
 }
 
 const setIHat = event => {
@@ -117,9 +157,9 @@ const handleCoordinateSystemClick = event => {
 
     console.log(x, y, iHat, jHat)
 
-    if ((x - iHat[0]) * (x - iHat[0]) + (y - iHat[1]) * (y - iHat[1]) < scale * scale * 0.3 * 0.3) {
+    if ((x - iHat[0]) * (x - iHat[0]) + (y - iHat[1]) * (y - iHat[1]) < 8 * 8) {
         coordinateSystem.addEventListener('mousemove', setIHat)
-    } else if ((x - jHat[0]) * (x - jHat[0]) + (y - jHat[1]) * (y - jHat[1]) < scale * scale * 0.3 * 0.3) {
+    } else if ((x - jHat[0]) * (x - jHat[0]) + (y - jHat[1]) * (y - jHat[1]) < 8 * 8) {
         coordinateSystem.addEventListener('mousemove', setJHat)
     }
 }
@@ -129,9 +169,9 @@ const handleCoordinateSystemMousUp = event => {
     coordinateSystem.removeEventListener('mousemove', setJHat)
 }
 
-const setInfo = () => {
+const drawMatrix = (matrixContext, matrix, name) => {
     matrixContext.font = '30px Time New Roman'
-    matrixContext.fillText('A =', 1, 70)
+    matrixContext.fillText(`${name} =`, 1, 70)
 
     matrixContext.beginPath()
     matrixContext.moveTo(65, 5)
@@ -150,15 +190,31 @@ const setInfo = () => {
     matrixContext.stroke()
 
     matrixContext.font = '24px Time New Roman'
-    matrixContext.fillText(matrix[0][0], 75, 35)
-    matrixContext.fillText(matrix[0][1], 75, 105)
-    matrixContext.fillText(matrix[1][0], 155, 35)
-    matrixContext.fillText(matrix[1][1], 155, 105)
-
-    const determinant = matrix[0][0] * matrix[1][1] - matrix[1][0] * matrix[0][1]
-    document.getElementById('det-div').innerText = `det(A) = ${determinant}`
+    matrixContext.fillText(round(matrix[0][0], 2), 75, 35)
+    matrixContext.fillText(round(matrix[0][1], 2), 75, 105)
+    matrixContext.fillText(round(matrix[1][0], 2), 155, 35)
+    matrixContext.fillText(round(matrix[1][1], 2), 155, 105)
 }
 
+const setInfo = () => {
+    drawMatrix(matrixContext, matrix, 'A')
+
+    const determinant = matrix[0][0] * matrix[1][1] - matrix[1][0] * matrix[0][1]
+    document.getElementById('det-div').innerText = `det(A) = ${round(determinant, 4)}`
+
+    drawMatrix(inverseMatrixContext, matrixInverse(matrix), 'B')
+}
+
+const handleZoom = event => {
+    scale *= 1 - Math.sign(event.deltaY) / 10
+    scale = Math.max(4, scale)
+    context.clearRect(0, 0, coordinateSystem.width, coordinateSystem.height)
+    drawCoordinates()
+    drawBaseVectors()
+    drawTransformedCoordinates()
+}
+
+const round = (number, digits) => Math.round(Math.pow(10, digits) * number) / Math.pow(10, digits)
 
 
 coordinateSystem.width = parentDivWidth - 2 * marginHorizontal
@@ -166,6 +222,7 @@ coordinateSystem.height = parentDivHeight - 2 * marginVertical
 
 window.addEventListener('resize', updateDimensions)
 coordinateSystem.addEventListener('mousedown', handleCoordinateSystemClick)
+coordinateSystem.addEventListener('wheel', handleZoom)
 window.addEventListener('mouseup', handleCoordinateSystemMousUp)
 
 
