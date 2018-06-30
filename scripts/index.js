@@ -153,6 +153,9 @@ const setInfo = () => {
     matrixContext.fillText(matrix[0][1], 75, 105)
     matrixContext.fillText(matrix[1][0], 155, 35)
     matrixContext.fillText(matrix[1][1], 155, 105)
+
+    const determinant = matrix[0][0] * matrix[1][1] - matrix[1][0] * matrix[0][1]
+    document.getElementById('det-div').innerText = `det(A) = ${determinant}`
 }
 
 
