@@ -2,6 +2,7 @@ particlesJS.load('particles-js', 'assets/particlesjs-config.json', function () {
     console.log('callback - particles.js config loaded');
 })
 
+
 const marginVertical = 20
 const marginHorizontal = 20
 let scale = 50
@@ -27,7 +28,7 @@ const inverseMatrixContext = inverseMatrixCanvas.getContext('2d')
 let matrix = [[5, 2], [3, 4]]
 
 
-const updateDimensions = () => {
+const updateDimensions = function () {
     parentDivWidth = document.getElementById('coordinate-system-div').offsetWidth
     parentDivHeight = document.getElementById('coordinate-system-div').offsetHeight
 
@@ -40,7 +41,7 @@ const updateDimensions = () => {
     setInfo()
 }
 
-const drawCoordinates = () => {
+const drawCoordinates = function () {
     let xScale = Math.floor(coordinateSystem.width / (2 * scale))
     for (let i = -xScale; i <= xScale; i++) {
         context.beginPath()
@@ -66,7 +67,7 @@ const drawCoordinates = () => {
     drawTransformedCoordinates()
 }
 
-const drawTransformedCoordinates = () => {
+const drawTransformedCoordinates = function () {
     const xScale = Math.floor(coordinateSystem.width / (2 * scale))
     const yScale = Math.floor(coordinateSystem.height / (2 * scale))
     const origin = [Math.floor(coordinateSystem.width / 2), Math.floor(coordinateSystem.height / 2)]
@@ -98,7 +99,7 @@ const drawTransformedCoordinates = () => {
     }
 }
 
-const drawBaseVectors = () => {
+const drawBaseVectors = function () {
     const origin = [Math.floor(coordinateSystem.width / 2), Math.floor(coordinateSystem.height / 2)]
 
     //draw i hat
@@ -118,13 +119,13 @@ const drawBaseVectors = () => {
     context.stroke()
 }
 
-const resetCanvas = () => {
+const resetCanvas = function () {
     context.clearRect(0, 0, coordinateSystem.width, coordinateSystem.height)
     matrixContext.clearRect(0, 0, matrixCanvas.width, matrixCanvas.height)
     inverseMatrixContext.clearRect(0, 0, inverseMatrixCanvas.width, inverseMatrixCanvas.height)
 }
 
-const setIHat = event => {
+const setIHat = function (event) {
     const origin = [Math.floor(coordinateSystem.width / 2), Math.floor(coordinateSystem.height / 2)]
 
     const x = (event.offsetX - origin[0]) / scale
@@ -138,7 +139,7 @@ const setIHat = event => {
     setInfo()
 }
 
-const setJHat = event => {
+const setJHat = function (event) {
     const origin = [Math.floor(coordinateSystem.width / 2), Math.floor(coordinateSystem.height / 2)]
 
     const x = (event.offsetX - origin[0]) / scale
@@ -152,7 +153,7 @@ const setJHat = event => {
     setInfo()
 }
 
-const handleCoordinateSystemClick = event => {
+const handleCoordinateSystemClick = function (event) {
     const origin = [Math.floor(coordinateSystem.width / 2), Math.floor(coordinateSystem.height / 2)]
     const x = event.offsetX
     const y = event.offsetY
@@ -168,14 +169,14 @@ const handleCoordinateSystemClick = event => {
     }
 }
 
-const handleCoordinateSystemMousUp = event => {
+const handleCoordinateSystemMousUp = function (event) {
     coordinateSystem.removeEventListener('mousemove', setIHat)
     coordinateSystem.removeEventListener('mousemove', setJHat)
 }
 
-const drawMatrix = (matrixContext, matrix, name) => {
+const drawMatrix = function (matrixContext, matrix, name) {
     matrixContext.font = '30px Time New Roman'
-    matrixContext.fillText(`${name} =`, 1, 70)
+    matrixContext.fillText(name + ' = ', 1, 70)
 
     matrixContext.beginPath()
     matrixContext.moveTo(65, 5)
@@ -200,16 +201,16 @@ const drawMatrix = (matrixContext, matrix, name) => {
     matrixContext.fillText(round(matrix[1][1], 2), 155, 105)
 }
 
-const setInfo = () => {
+const setInfo = function () {
     drawMatrix(matrixContext, matrix, 'A')
 
     const determinant = matrix[0][0] * matrix[1][1] - matrix[1][0] * matrix[0][1]
-    document.getElementById('det-div').innerText = `det(A) = ${round(determinant, 4)}`
+    document.getElementById('det-div').innerText = 'det(A) = ' + round(determinant, 4)
 
     drawMatrix(inverseMatrixContext, matrixInverse(matrix), 'B')
 }
 
-const handleZoom = event => {
+const handleZoom = function (event) {
     scale *= 1 - Math.sign(event.deltaY) / 10
     scale = Math.max(4, scale)
     context.clearRect(0, 0, coordinateSystem.width, coordinateSystem.height)
@@ -218,7 +219,9 @@ const handleZoom = event => {
     drawBaseVectors()
 }
 
-const round = (number, digits) => Math.round(Math.pow(10, digits) * number) / Math.pow(10, digits)
+const round = function (number, digits) {
+    return Math.round(Math.pow(10, digits) * number) / Math.pow(10, digits)
+}
 
 
 coordinateSystem.width = parentDivWidth - 2 * marginHorizontal
@@ -235,4 +238,26 @@ drawBaseVectors()
 setInfo()
 
 
+//social buttons
 
+const twitterButtons = document.getElementsByClassName('twitter-button')
+const instagramButtons = document.getElementsByClassName('instagram-button')
+const githubButtons = document.getElementsByClassName('github-button')
+
+for (let i = 0; i < twitterButtons.length; i++) {
+    twitterButtons[i].addEventListener('click', function () {
+        window.open('https://twitter.com/DennisWeiss263', '_blank')
+    })
+}
+
+for (let i = 0; i < instagramButtons.length; i++) {
+    instagramButtons[i].addEventListener('click', function () {
+        window.open('https://www.instagram.com/dennis263313', '_blank')
+    })
+}
+
+for (let i = 0; i < githubButtons.length; i++) {
+    githubButtons[i].addEventListener('click', function () {
+        window.open('https://github.com/DennisWeiss', '_blank')
+    })
+}
