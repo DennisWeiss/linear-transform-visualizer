@@ -25,7 +25,7 @@ const matrixContext = matrixCanvas.getContext('2d')
 const inverseMatrixCanvas = document.getElementById('inverse-matrix')
 const inverseMatrixContext = inverseMatrixCanvas.getContext('2d')
 
-let matrix = [[5, 2], [3, 4]]
+let matrix = [[1, 0], [0, 1]]
 
 
 const updateDimensions = function () {
