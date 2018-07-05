@@ -1,37 +1,134 @@
+body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+#particles-js {
+    background: url('../assets/bg.jpg');
+    background-size: 100% auto;
+    height: 1400px;
+}
+
 #coordinate-system-div {
     flex-grow: 1;
-    height: 100%;
+    height: 700px;
 }
 
 .main {
+    background: #f4f4f4;
+	position: absolute;
+    top: 400px;
+    left: 150px;
+    width: calc(100% - 300px)
+}
+
+.social-links {
+    display: flex;
+    position: absolute;
+    top: 1300px;
+    left: 50%;
+    margin: 0 auto;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%)
+}
+
+.social-button {
+    cursor: pointer;
+    padding: 7px;
+    border-radius: 50%;
+    width: 32px;
+    margin: 0 10px;
+}
+
+.twitter-button {
+    background: rgba(255, 255, 255, 0);
+    border: 2px rgba(255, 255, 255, 0.9) solid;
+}
+
+.twitter-button:hover {
+    background: rgb(29, 161, 242);
+    border: 2px rgb(29, 161, 242) solid;
+}
+
+.twitter-logo {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.twitter-button:hover > .twitter-logo {
+    color: rgba(255, 255, 255, 1);
+}
+
+.instagram-button {
+    padding: 5px 5px 6px 9px;
+    background: rgba(255, 255, 255, 0);
+    border: 2px rgba(255, 255, 255, 0.9) solid;
+}
+
+.instagram-button:hover {
+    background: rgb(138, 58, 185);
+    border: 2px rgb(138, 58, 185) solid;
+}
+
+.instagram-logo {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.instagram-button:hover > .instagram-logo {
+    color: rgb(255, 255, 255);
+}
+
+.github-button {
+    color: rgba(255, 255, 255, 0.8);
+    cursor: pointer;
+    margin: 0 10px;
+}
+
+.github-button:hover {
+    color: #913399;
+}
+
+.github-logo {
+
+}
+
+.title {
+    padding: 0 30px;
+}
+
+.linear-transform-visualizer {
     display: flex;
 }
 
 #info {
+    margin: 5px 0;
     width: 300px;
-    height: 100%;
+    height: 700px;
     float: right;
 }
 
 #matrix-div {
-    margin-top: 30px;
+    margin-top: 5px;
     margin-left: 20px;
 }
 
 #matrix-inverse-div {
-    margin-top: 30px;
+    margin-top:15px;
     margin-left: 20px;
 }
 
 #det-div {
     font: 26px "Times New Roman";
-    margin: 40px 25px;
+    margin: 20px 25px;
 }
 
 #coordinate-system {
     position: absolute;
     left: 20px;
-    top: 20px;
-    background: #f8f8f8;
+    top: 80px;
+    background: #111111;
     border: 1px black solid;
+}
+
+* {
+    z-index: 2;
 }

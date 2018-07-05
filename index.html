@@ -1,25 +1,48 @@
 <html>
 <head>
     <title>Linear Transform Visualizer</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="styles/index.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
     <script src="scripts/linear_algebra.js"></script>
+    <script src="scripts/particles.js"></script>
 </head>
 <body>
-<div class="main">
-    <div id="coordinate-system-div">
-        <canvas id="coordinate-system"></canvas>
-    </div>
-    <div id="info">
-        <div id="matrix-div">
-            <canvas id="matrix" width="250" height="130">
-            </canvas>
-        </div>
-        <div id="det-div">
+<div id="particles-js">
+    <div>
+        <div class="main">
+            <div class="title">
+                <h1>Linear Transform Visualizer</h1>
+            </div>
+            <div class="linear-transform-visualizer">
+                <div id="coordinate-system-div">
+                    <canvas id="coordinate-system"></canvas>
+                </div>
+                <div id="info">
+                    <div id="matrix-div">
+                        <canvas id="matrix" width="250" height="130">
+                        </canvas>
+                    </div>
+                    <div id="det-div">
 
+                    </div>
+                    <div id="matrix-inverse-div">
+                        <canvas id="inverse-matrix" width="250" height="130">
+                        </canvas>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div id="matrix-inverse-div">
-            <canvas id="inverse-matrix" width="250" height="130">
-            </canvas>
+        <div class="social-links">
+            <div class="social-button twitter-button">
+                <i class="fab fa-twitter fa-2x twitter-logo"></i>
+            </div>
+            <div class="social-button instagram-button">
+                <i class="fab fa-instagram fa-2x instagram-logo"></i>
+            </div>
+            <div class="github-button">
+                <i class="fab fa-github fa-3x github-logo"></i>
+            </div>
         </div>
     </div>
 </div>

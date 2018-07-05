@@ -1,10 +1,14 @@
+particlesJS.load('particles-js', 'assets/particlesjs-config.json', function () {
+    console.log('callback - particles.js config loaded');
+})
 
 const marginVertical = 20
 const marginHorizontal = 20
 let scale = 50
 // const arrowHeadLength = 10
-const coordinateColor = '#aaaaaa'
-const axisColor = '#000000'
+const coordinateColor = '#bbbbbb'
+const axisColor = '#dddddd'
+const transformedCoordinateColor = '#00ffff'
 const iHat = 'red'
 const jHat = 'blue'
 
@@ -67,26 +71,26 @@ const drawTransformedCoordinates = () => {
     const yScale = Math.floor(coordinateSystem.height / (2 * scale))
     const origin = [Math.floor(coordinateSystem.width / 2), Math.floor(coordinateSystem.height / 2)]
 
-    for (let i = -3 * xScale; i <= 3 * xScale; i++) {
+    for (let i = -5 * xScale; i <= 5 * xScale; i++) {
         context.beginPath()
-        const posVector = [i, 3 * yScale]
-        const negVector = [i, -3 * yScale]
+        const posVector = [i, 5 * yScale]
+        const negVector = [i, -5 * yScale]
         const transformedPosVector = vectorTransform(matrix, posVector)
         const transformedNegVector = vectorTransform(matrix, negVector)
-        context.strokeStyle = '#589EA5'
+        context.strokeStyle = transformedCoordinateColor
         context.lineWidth = 1
         context.moveTo(origin[0] + scale * transformedPosVector[0], origin[1] - scale * transformedPosVector[1])
         context.lineTo(origin[0] + scale * transformedNegVector[0], origin[1] - scale * transformedNegVector[1])
         context.stroke()
     }
 
-    for (let i = -3 * yScale; i <= 3 * yScale; i++) {
+    for (let i = -5 * yScale; i <= 5 * yScale; i++) {
         context.beginPath()
-        const posVector = [3 * xScale, i]
-        const negVector = [-3 * xScale, i]
+        const posVector = [5 * xScale, i]
+        const negVector = [-5 * xScale, i]
         const transformedPosVector = vectorTransform(matrix, posVector)
         const transformedNegVector = vectorTransform(matrix, negVector)
-        context.strokeStyle = '#589EA5'
+        context.strokeStyle = transformedCoordinateColor
         context.lineWidth = 1
         context.moveTo(origin[0] + scale * transformedPosVector[0], origin[1] - scale * transformedPosVector[1])
         context.lineTo(origin[0] + scale * transformedNegVector[0], origin[1] - scale * transformedNegVector[1])
@@ -229,4 +233,6 @@ window.addEventListener('mouseup', handleCoordinateSystemMousUp)
 drawCoordinates()
 drawBaseVectors()
 setInfo()
+
+
 
