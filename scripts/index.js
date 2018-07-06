@@ -174,40 +174,47 @@ const handleCoordinateSystemMousUp = function (event) {
     coordinateSystem.removeEventListener('mousemove', setJHat)
 }
 
-const drawMatrix = function (matrixContext, matrix, name) {
+const drawMatrix = function (matrixContext, matrix, name, inverse) {
     matrixContext.font = '30px Time New Roman'
-    matrixContext.fillText(name + ' = ', 1, 70)
+    matrixContext.fillText(name + (inverse ? ' ' : '') + ' = ', 1, 70)
+
+    if (inverse) {
+        matrixContext.font = '20px Time New Roman'
+        matrixContext.fillText('-1', 20, 50)
+    }
+
+    const offset = inverse ? 10 : 0
 
     matrixContext.beginPath()
-    matrixContext.moveTo(65, 5)
-    matrixContext.lineTo(60, 5)
-    matrixContext.lineTo(60, 125)
-    matrixContext.lineTo(65, 125)
+    matrixContext.moveTo(65 + offset, 5)
+    matrixContext.lineTo(60 + offset, 5)
+    matrixContext.lineTo(60 + offset, 125)
+    matrixContext.lineTo(65 + offset, 125)
     matrixContext.strokeStyle = '#000000'
     matrixContext.stroke()
 
     matrixContext.beginPath()
-    matrixContext.moveTo(215, 5)
-    matrixContext.lineTo(220, 5)
-    matrixContext.lineTo(220, 125)
-    matrixContext.lineTo(215, 125)
+    matrixContext.moveTo(215 + offset, 5)
+    matrixContext.lineTo(220 + offset, 5)
+    matrixContext.lineTo(220 + offset, 125)
+    matrixContext.lineTo(215 + offset, 125)
     matrixContext.strokeStyle = '#000000'
     matrixContext.stroke()
 
     matrixContext.font = '24px Time New Roman'
-    matrixContext.fillText(round(matrix[0][0], 2), 75, 35)
-    matrixContext.fillText(round(matrix[0][1], 2), 75, 105)
-    matrixContext.fillText(round(matrix[1][0], 2), 155, 35)
-    matrixContext.fillText(round(matrix[1][1], 2), 155, 105)
+    matrixContext.fillText(round(matrix[0][0], 2), 75 + offset, 35)
+    matrixContext.fillText(round(matrix[0][1], 2), 75 + offset, 105)
+    matrixContext.fillText(round(matrix[1][0], 2), 155 + offset, 35)
+    matrixContext.fillText(round(matrix[1][1], 2), 155 + offset, 105)
 }
 
 const setInfo = function () {
-    drawMatrix(matrixContext, matrix, 'A')
+    drawMatrix(matrixContext, matrix, 'A', false)
 
     const determinant = matrix[0][0] * matrix[1][1] - matrix[1][0] * matrix[0][1]
     document.getElementById('det-div').innerText = 'det(A) = ' + round(determinant, 4)
 
-    drawMatrix(inverseMatrixContext, matrixInverse(matrix), 'B')
+    drawMatrix(inverseMatrixContext, matrixInverse(matrix), 'A', true)
 }
 
 const handleZoom = function (event) {
