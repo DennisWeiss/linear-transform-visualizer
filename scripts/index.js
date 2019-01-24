@@ -218,6 +218,7 @@ const setInfo = function () {
 }
 
 const handleZoom = function (event) {
+    event.preventDefault()
     scale *= 1 - Math.sign(event.deltaY) / 10
     scale = Math.max(4, scale)
     context.clearRect(0, 0, coordinateSystem.width, coordinateSystem.height)
